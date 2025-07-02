@@ -158,6 +158,7 @@ modules:
 
   - name: pairinteraction
     buildsystem: simple
+    run-tests: true
     build-options:
       env:
         SKBUILD_BUILD_VERBOSE: 'true'
@@ -168,9 +169,13 @@ modules:
           -DFETCHCONTENT_SOURCE_DIR_DOCTEST=/run/build/pairinteraction/_deps/doctest
           -DFETCHCONTENT_SOURCE_DIR_HTTPLIB=/run/build/pairinteraction/_deps/httplib
           -DFETCHCONTENT_SOURCE_DIR_MINIZ=/run/build/pairinteraction/_deps/miniz
+      test-args:
+        - --share=network
     build-commands:
       - pip3 install --verbose --exists-action=i --no-index --no-deps --no-build-isolation
         --prefix=${FLATPAK_DEST} "."
+    test-commands:
+      - pytest --verbose -s
     sources:
       - type: archive
         url: https://github.com/pairinteraction/pairinteraction/archive/refs/tags/v2.1.0.tar.gz
